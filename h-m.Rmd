@@ -1,0 +1,66 @@
+---
+title: "Recommender System: H&M"
+author: "Alice Friedman"
+date: "11/7/2018"
+output: 
+  html_document:
+    theme: cosmo
+    toc: TRUE
+    toc_float: TRUE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#H&M
+<a href="https://www2.hm.com/en_us/index.html" target="_blank">H&M</a> is an international fashion brand with an online presence. Potential shoppers who visit the site and click on any item will be offered 4 reccommendations to "Style With 4" the potential purchase as well as 4 recommnended items "Others Also Bought."
+
+#Scenario Analysis
+##Target Users
+Target Users are potial H&M shoppers, especially those who can be persuaded to purchase additional items!
+##User's Key Goals
+The shopper's goals could include:
+
+1. To spend as little money as possible
+
+2. To avoid returns
+
+3. To appear fashionable, possibly by purchasing a complete outfit all at once
+
+4. To find new clothes and accessories in their style
+
+5. To find new clothes in their size
+##Accomplishing Goals
+The system is designed to meet the above goals as follows:
+
+1. It's not! The want you to buy more. This is a case where the user's goals and the seller's goals are not aligned.
+
+2. On this point, H&M and the shopper are aligned. Returns are bad for business! Here, the system could incorporate data on returns when making recommendations, although this is hard to tell as a site visitor.
+
+3. People visit H&M to to buy "fast-fashion", e.g. clothes and accessories that are on trend. The site recommends related items that can pair with the item viewed to complete a look, e.g. pants viewed may be paired with a top, earings, shoes, and a bag.
+
+4. The "Others Also Bought" recommended items help shoppers find things in their style and size by recommending similar cuts or themes for the type of item shown, e.g. pants will be shown with other, similar pants and earrings with other earrings. This allows the shopper to choose the best match among similar items.
+
+5. Not a lot! This is where I see the most room for improvement.
+
+#Reverse Engineering the System
+The system consists of two parts: "Style With 4" and "Others Also Bought," which appear to operate under different principles.
+
+##Style With 4
+###Rule 1: Match Catalog Photos
+The "Style With 4" items are often those that are shown on the model--these are likly chosen by a human as part of the catalog shoot and then coded in the system as items to be paired. Clicking on a pair of pants shown with shoes and a shirt will suggest the shoes and the shirt shown--with one twist. 
+###Rule 2: Only Show In-Stock Items
+Out of stock items will not be shown. Therefore, a ranked preference system must exist where if the originally chose items are not available, a second level of items is shown. On the H&M site, these appear to skew towards generic or basic items that do not necessarily have to match the chosen item, e.g. bras, tank tops, and stockings--a human stylist not required! 
+###Rule #3: Match previous categories
+Finally, a shopper who clicks on maternity wear will not initially be directed to additional materntiy choices, even when viewing a non-maternity item, e.g. shoes. The reverse is also true--shoppers who start out in standard Women's clothes will not be shown items in maternity. Some items, e.g. shoes and earrings, can be both and will be shown to both sets of shoppers.
+
+##Others Also Bought
+###Rule #1: Match item type first
+Dresses will be shown with dresses, shoes with shoes, etc. Presumably, some who bough shoes also bought shirts, so there must be a business reason why this matching is preferred. While these may shown on the next page of recommendations, there is a clear preference in the system to match by type, first.
+###Rule #2: Match style as much as possible
+If the exact style exists, typically the same item in different colors or prints will be shown, although not more than twice even if more than 3 variations exist. Otherwise, similar styles will be shown. Turtlenecks with other turtlenecks, for example, although--again--surely many customers are buying a variety of styles, so this must be a business preference with underlying items coded with some sort of "style" field.
+
+
+#Recommendations to Improve the System
+The recommmender could do more to meet the shoppers demand to find clothes only in a certain size. For example, if a user selects an item in a certain size, it could filter out recommended items that are sold out in that size.
